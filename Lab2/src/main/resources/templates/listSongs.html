@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Songs Homepage - Welcome to My Music Store</title>
+    <style type="text/css">
+        body {
+            width: 800px;
+            margin: auto;
+        }
+        .song-actions {
+            margin-top: 5px;
+        }
+        .song-actions a {
+            margin-right: 10px;
+            text-decoration: none;
+        }
+        .button {
+            display: inline-block;
+            padding: 2px 5px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Welcome to My Music Store</h1>
+</header>
+<main>
+    <div>
+        <a href="/songs/add-form" class="button">Add New Song</a>
+    </div>
+
+    <h2>Choose a song:</h2>
+    <form method="POST" action="/listSongs">
+        <th:block th:each="song : ${songs}">
+            <div>
+                <input type="radio" name="trackId" th:value="${song.trackId}">
+                Title: <span th:text="${song.title}"></span>,
+                Genre: <span th:text="${song.genre}"></span>,
+                Release Year: <span th:text="${song.releaseYear}"></span>,
+                Album: <span th:text="${song.album?.name ?: 'No Album'}"></span>
+
+                <div class="song-actions">
+                    <a th:href="@{/songDetails(trackId=${song.trackId})}" class="button">View Details</a>
+                    <a th:href="@{/songs/edit-form/{id}(id=${song.id})}" class="button">Edit</a>
+                    <a th:href="@{/songs/delete/{id}(id=${song.id})}" class="button">Delete</a>
+                    <a th:href="@{/artists/add-to-song(trackId=${song.trackId})}" class="button">Add Artist</a>
+                </div>
+            </div>
+            <br/>
+        </th:block>
+        <input type='submit' value='Select Song' class="button">
+    </form>
+</main>
+</body>
+</html>
