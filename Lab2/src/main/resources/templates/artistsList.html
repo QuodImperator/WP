@@ -35,12 +35,11 @@
     <h2>Select artist:</h2>
     <form method="POST" action="/artists/add-to-song">
         <input type="hidden" name="trackId" th:value="${song.trackId}">
-        <th:block th:each="artist : ${artists}">
-            <input type="radio" name="artistId" th:value="${artist.id}">
+        <div th:each="artist : ${artists}">
+            <input type="radio" name="artistId" th:value="${artist.id}" required>
             <span th:text="${artist.firstName + ' ' + artist.lastName}"></span><br/>
-        </th:block>
-        <br/>
-        <input type='submit' value='Add artist'>
+        </div>
+        <button type="submit">Add Selected Artist</button>
     </form>
 </section>
 <aside>
@@ -66,5 +65,8 @@
         </tr>
     </table>
 </aside>
+<div>
+    <a href="/artists/add-form">Add New Artist</a>
+</div>
 </body>
 </html>

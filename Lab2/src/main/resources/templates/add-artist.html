@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Add Artist</title>
+</head>
+<body>
+<h1>Add New Artist</h1>
+<form action="/artists/add" method="POST">
+  <div>
+    <label for="firstName">First Name:</label>
+    <input type="text" id="firstName" name="firstName" required>
+  </div>
+  <div>
+    <label for="lastName">Last Name:</label>
+    <input type="text" id="lastName" name="lastName" required>
+  </div>
+  <div>
+    <label for="bio">Bio:</label>
+    <textarea id="bio" name="bio" required></textarea>
+  </div>
+  <button type="submit">Add Artist</button>
+</form>
+</body>
+</html>

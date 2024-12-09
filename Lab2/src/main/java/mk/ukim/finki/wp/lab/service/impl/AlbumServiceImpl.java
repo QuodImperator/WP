@@ -25,4 +25,10 @@ public class AlbumServiceImpl implements AlbumService {
         return albumRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Album not found"));
     }
+
+    @Override
+    public Album saveAlbum(String name, String genre, String releaseYear) {
+        Album album = new Album(name, genre, releaseYear);
+        return albumRepository.save(album);
+    }
 }

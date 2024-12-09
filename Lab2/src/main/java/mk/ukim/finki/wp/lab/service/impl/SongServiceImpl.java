@@ -7,6 +7,7 @@ import mk.ukim.finki.wp.lab.repository.AlbumRepository;
 import mk.ukim.finki.wp.lab.repository.SongRepository;
 import mk.ukim.finki.wp.lab.service.SongService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,14 +42,25 @@ public class SongServiceImpl implements SongService {
     public Song saveSong(String title, String trackId, String genre, int releaseYear, Long albumId) {
         Album album = albumRepository.findById(albumId)
                 .orElseThrow(() -> new RuntimeException("Album not found"));
-        return songRepository.save(new Song(trackId, title, genre, releaseYear, new ArrayList<>()));
+        Song song = new Song(trackId, title, genre, releaseYear);
+        song.setAlbum(album);
+        return songRepository.save(song);
     }
 
     @Override
     public Song editSong(Long id, String title, String trackId, String genre, int releaseYear, Long albumId) {
+        Song song = songRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Song not found"));
         Album album = albumRepository.findById(albumId)
                 .orElseThrow(() -> new RuntimeException("Album not found"));
-        return songRepository.edit(id, title, trackId, genre, releaseYear, album);
+
+        song.setTitle(title);
+        song.setTrackId(trackId);
+        song.setGenre(genre);
+        song.setReleaseYear(releaseYear);
+        song.setAlbum(album);
+
+        return songRepository.save(song);
     }
 
     @Override
@@ -57,7 +69,19 @@ public class SongServiceImpl implements SongService {
     }
 
     @Override
+    public List<Song> findSongsByAlbum(Long albumId) {
+        return songRepository.findAllByAlbum_Id(albumId);
+    }
+
+    @Override
+    @Transactional
     public Artist addArtistToSong(Artist artist, Song song) {
-        return songRepository.addArtistToSong(artist, song);
+        Song existingSong = songRepository.findByTrackId(song.getTrackId());
+        if (existingSong != null) {
+            existingSong.getPerformers().add(artist);
+            songRepository.save(existingSong);
+            return artist;
+        }
+        return null;
     }
 }

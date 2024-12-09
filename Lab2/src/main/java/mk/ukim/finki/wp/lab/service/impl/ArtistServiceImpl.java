@@ -26,4 +26,10 @@ public class ArtistServiceImpl implements ArtistService {
         return artistRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Artist not found"));
     }
+
+    @Override
+    public Artist saveArtist(String firstName, String lastName, String bio) {
+        Artist artist = new Artist(firstName, lastName, bio);
+        return artistRepository.save(artist);
+    }
 }

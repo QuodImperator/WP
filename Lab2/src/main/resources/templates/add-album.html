@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add Album</title>
+</head>
+<body>
+<h1>Add New Album</h1>
+<form action="/albums/add" method="POST">
+    <div>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+    </div>
+    <div>
+        <label for="genre">Genre:</label>
+        <input type="text" id="genre" name="genre" required>
+    </div>
+    <div>
+        <label for="releaseYear">Release Year:</label>
+        <input type="text" id="releaseYear" name="releaseYear" required>
+    </div>
+    <button type="submit">Add Album</button>
+</form>
+</body>
+</html>
