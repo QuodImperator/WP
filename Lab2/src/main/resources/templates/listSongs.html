@@ -49,6 +49,7 @@
                     <a th:href="@{/songs/edit-form/{id}(id=${song.id})}" class="button">Edit</a>
                     <a th:href="@{/songs/delete/{id}(id=${song.id})}" class="button">Delete</a>
                     <a th:href="@{/artists/add-to-song(trackId=${song.trackId})}" class="button">Add Artist</a>
+                    <a th:href="@{/songs/by-album/{id}(id=${song.album.id})}" class="button" th:text="'View Album Songs'">View Album Songs</a>
                 </div>
             </div>
             <br/>

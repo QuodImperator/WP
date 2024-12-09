@@ -94,4 +94,11 @@ public class SongController {
         songService.deleteSong(id);
         return "redirect:/songs";
     }
+
+    @GetMapping("/songs/by-album/{id}")
+    public String getSongsByAlbum(@PathVariable Long id, Model model) {
+        List<Song> songs = songService.findSongsByAlbum(id);
+        model.addAttribute("songs", songs);
+        return "listSongs";
+    }
 }
